@@ -35,7 +35,3 @@ dependencies {
     implementation 'com.oracle.database.security:oraclepki'
     implementation 'com.oracle.database.security:osdt_core'
 }
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
