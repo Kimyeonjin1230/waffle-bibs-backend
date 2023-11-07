@@ -1,0 +1,21 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  datasource:
+    url: jdbc:oracle:thin:@bibs_high?TNS_ADMIN=/Users/seunggu-sun/Desktop/Wallet_bibs
+    username: admin
+    password: Wafflebibs1234
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.sql: debug
