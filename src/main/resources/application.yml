@@ -4,8 +4,8 @@ spring:
       enabled: always
 
   datasource:
-    url: jdbc:oracle:thin:@bibs_high?TNS_ADMIN=/Users/seunggu-sun/Desktop/Wallet_bibs
-#    url: jdbc:oracle:thin:@bibs_high?TNS_ADMIN=/home/ubuntu/Wallet_bibs
+#    url: jdbc:oracle:thin:@bibs_high?TNS_ADMIN=/Users/seunggu-sun/Desktop/Wallet_bibs
+    url: jdbc:oracle:thin:@bibs_high?TNS_ADMIN=/home/ubuntu/Wallet_bibs
     username: admin
     password: Wafflebibs1234
     driver-class-name: oracle.jdbc.OracleDriver
