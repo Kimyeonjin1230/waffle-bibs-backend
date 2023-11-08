@@ -6,10 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Member {
+public class Todo {
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "todo_id")
     private Long id;
 
     private String name;
