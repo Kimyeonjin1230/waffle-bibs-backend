@@ -4,10 +4,21 @@ spring:
       enabled: always
 
   datasource:
+    hikari:
+      auto-commit: false
+      connection-timeout: 30000
+      keepalive-time: 0
+      maximum-pool-size: 10
     url: jdbc:oracle:thin:@bibs_high?TNS_ADMIN=/Users/seunggu-sun/Desktop/Wallet_bibs
     username: admin
     password: Wafflebibs1234
     driver-class-name: oracle.jdbc.OracleDriver
+
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url:
+#    username: user
+#    password: Wafflebibs1234
 
   jpa:
     hibernate:
@@ -16,8 +27,9 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
         format_sql: true
-    database-platform: org.hibernate.dialect.Oracle12cDialect
+    database-platform: org.hibernate.dialect.MySQL57Dialect
     show-sql: true
+    database: mysql
 
 logging:
   level:
