@@ -9,5 +9,4 @@ public class WaffleTodoApplication {
     public static void main(String[] args) {
         SpringApplication.run(WaffleTodoApplication.class, args);
     }
-
 }
