@@ -29,9 +29,7 @@ public class SwaggerConfig {
                 // API문서 title, version 등 설정 진행.
                 .apiInfo(apiInfo())
                 // swagger에서 제공하는 기본 응답 코드 설명 제거
-                .useDefaultResponseMessages(false)
-                // API문서에서 제외할 class 지정. "," 로 이어서 작성해도 됨.
-                .ignoredParameterTypes(TestController.class);
+                .useDefaultResponseMessages(false);
     }
 
 
