@@ -1,6 +1,5 @@
 package com.gdsc.waffle.config;
 
-import com.gdsc.waffle.TestController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -29,7 +28,7 @@ public class SwaggerConfig {
                 // API문서 title, version 등 설정 진행.
                 .apiInfo(apiInfo())
                 // swagger에서 제공하는 기본 응답 코드 설명 제거
-                .useDefaultResponseMessages(false)
+                .useDefaultResponseMessages(false);
     }
 
 
