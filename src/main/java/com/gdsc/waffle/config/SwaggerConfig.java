@@ -1,6 +1,5 @@
 package com.gdsc.waffle.config;
 
-import com.gdsc.waffle.TestController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
