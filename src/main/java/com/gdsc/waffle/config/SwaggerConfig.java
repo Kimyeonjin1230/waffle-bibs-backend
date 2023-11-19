@@ -2,6 +2,7 @@ package com.gdsc.waffle.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -10,25 +11,17 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
+@EnableWebMvc
 public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-                // select() : ApiSelectorBuilder 를 활성화 하여, Builder 형태로 합니다.
+                .useDefaultResponseMessages(true)
                 .select()
-                // apis()
-                // API문서에 출력할 패키지 경로를 지정. (String)
-                .apis(RequestHandlerSelectors.basePackage("app.server.api"))
-                // paths()
-                // API문서에 출력할 URL 경로 지정. (String)
-                .paths(PathSelectors.ant("/api/**"))
-                // build() : build
+                .apis(RequestHandlerSelectors.basePackage("com.gdsc.waffle"))
+                .paths(PathSelectors.any())
                 .build()
-                // apiInfo()
-                // API문서 title, version 등 설정 진행.
-                .apiInfo(apiInfo())
-                // swagger에서 제공하는 기본 응답 코드 설명 제거
-                .useDefaultResponseMessages(false);
+                .apiInfo(apiInfo());
     }
 
 
