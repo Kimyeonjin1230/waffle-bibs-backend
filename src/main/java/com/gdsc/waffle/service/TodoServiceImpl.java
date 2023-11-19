@@ -8,6 +8,9 @@ import com.gdsc.waffle.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
@@ -27,6 +30,14 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public void deleteTodo(Long id) {
         todoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TodoDto> findAll() {
+        ArrayList<TodoDto> todoDtolist = new ArrayList<>();
+        List<TodoEntity> todoEntities = todoRepository.findAll();
+        for (TodoEntity todoEntity : todoEntities)  todoDtolist.add(entityToDto(todoEntity));
+        return todoDtolist;
     }
 
     @Override
