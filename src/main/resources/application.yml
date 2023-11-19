@@ -26,9 +26,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-#  sql:
-#    init:
-#      mode: always
-#      continue-on-error: true
-##      schema-locations: classpath:schema.sql
-##      data-locations: classpath:data.sql
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
