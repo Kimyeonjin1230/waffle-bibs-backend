@@ -24,9 +24,9 @@ public class TodoController {
     }
 
     // todo 상세조회
-    @GetMapping("/{categoryId}/{todoId}")
-    public ResponseEntity<TodoDto> getTodo(@PathVariable Long categoryId, @PathVariable Long todoId) {
-        TodoDto todo = todoService.findById(categoryId);
+    @GetMapping("/{todoId}")
+    public ResponseEntity<TodoDto> getTodo(@PathVariable Long todoId) {
+        TodoDto todo = todoService.findById(todoId);
         return new ResponseEntity<>(todo, HttpStatus.OK);
     }
 
