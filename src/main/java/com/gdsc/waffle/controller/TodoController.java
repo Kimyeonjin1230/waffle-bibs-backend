@@ -24,7 +24,7 @@ public class TodoController {
     @ApiOperation(value = "todo 목록 전체 조회 API", notes = "카테고리 안에 들어있는 todo 목록 전체를 조회하는 API 입니다.")
     @GetMapping("/{categoryId}/todo")
     public ResponseEntity<List<TodoDto>> getAllTodos(@PathVariable Long categoryId) {
-        List<TodoDto> todos = todoService.findAll();
+        List<TodoDto> todos = todoService.findAll(categoryId);
         return new ResponseEntity<>(todos, HttpStatus.OK);
     }
 
