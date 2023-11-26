@@ -8,7 +8,7 @@ import java.util.List;
 public interface TodoService {
     void addTodo(Long categoryId, TodoDto todoDto);
     void deleteTodo(Long id);
-    List<TodoDto> findAll();
+    List<TodoDto> findAll(Long id);
     TodoDto findById(Long id);
     void update(Long id, TodoDto updateParam);
 
