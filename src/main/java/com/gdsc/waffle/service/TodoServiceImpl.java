@@ -35,11 +35,13 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<TodoDto> findAll() {
-        ArrayList<TodoDto> todoDtolist = new ArrayList<>();
-        List<TodoEntity> todoEntities = todoRepository.findAll();
-        for (TodoEntity todoEntity : todoEntities)  todoDtolist.add(entityToDto(todoEntity));
-        return todoDtolist;
+    public List<TodoDto> findAll(Long categoryId) {
+        List<TodoEntity> todoEntityList = todoRepository.findByCategoryId(categoryId);
+        List<TodoDto> todoDtoList = new ArrayList<>();
+
+        for (TodoEntity todoEntity : todoEntityList)    todoDtoList.add(entityToDto(todoEntity));
+
+        return todoDtoList;
     }
 
     @Override
