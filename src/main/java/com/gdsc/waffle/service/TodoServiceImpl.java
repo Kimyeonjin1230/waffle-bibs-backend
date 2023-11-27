@@ -6,7 +6,9 @@ import com.gdsc.waffle.entity.TodoEntity;
 import com.gdsc.waffle.repository.CategoryRepository;
 import com.gdsc.waffle.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +35,19 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<TodoDto> findAll() {
-        ArrayList<TodoDto> todoDtolist = new ArrayList<>();
-        List<TodoEntity> todoEntities = todoRepository.findAll();
-        for (TodoEntity todoEntity : todoEntities)  todoDtolist.add(entityToDto(todoEntity));
-        return todoDtolist;
+    public List<TodoDto> findAll(Long categoryId) {
+        List<TodoEntity> todoEntityList = todoRepository.findByCategoryId(categoryId);
+        List<TodoDto> todoDtoList = new ArrayList<>();
+
+        for (TodoEntity todoEntity : todoEntityList)    todoDtoList.add(entityToDto(todoEntity));
+
+        return todoDtoList;
     }
 
     @Override
     public TodoDto findById(Long id) {
         TodoEntity todoEntity = todoRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("해당 Todo가 존재하지 않습니다."));
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 Todo를 찾을 수 없습니다."));
         return entityToDto(todoEntity);
     }
 
