@@ -33,7 +33,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<TodoDto> findAll() {
+    public List<TodoDto> findAll(Long categoryId) {
         ArrayList<TodoDto> todoDtolist = new ArrayList<>();
         List<TodoEntity> todoEntities = todoRepository.findAll();
         for (TodoEntity todoEntity : todoEntities)  todoDtolist.add(entityToDto(todoEntity));
@@ -54,6 +54,12 @@ public class TodoServiceImpl implements TodoService {
         todoEntity.setComplete_chk(updateParam.getComplete_chk());
         todoEntity.setStartTime(updateParam.getStartTime());
         todoEntity.setCategory(updateParam.getCategory());
+        todoEntity.setContents(updateParam.getContents());//setContents 추가
         todoRepository.save(todoEntity);
+    }
+
+    @Override
+    public List<TodoDto> findAllByCategoryId(Long categoryId) {
+        return null;
     }
 }

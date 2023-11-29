@@ -1,57 +1,85 @@
 package com.gdsc.waffle.controller;
 
 import com.gdsc.waffle.dto.TodoDto;
+import com.gdsc.waffle.entity.CategoryEntity;
 import com.gdsc.waffle.service.TodoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.ApiOperation; // swagger 제공 23-11-26
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
+@Api(tags = "Todo 컨트롤러")
 public class TodoController {
 
     private final TodoService todoService;
 
-    // todo 목록 전체 가져오기
-    @ApiOperation(value = "todo 목록 전체 가지오기 api", notes = "todo리스트 목록을 전체 다 가져온다.")
-    @GetMapping("/{categoryId}")
+    @ApiOperation(value = "todo 목록 전체 조회 API", notes = "카테고리 안에 들어있는 todo 목록 전체를 조회하는 API 입니다.")
+    @GetMapping("/{categoryId}/todo")
     public ResponseEntity<List<TodoDto>> getAllTodos(@PathVariable Long categoryId) {
-        List<TodoDto> todos = todoService.findAll();
-        return new ResponseEntity<>(todos, HttpStatus.OK);
+        if(categoryExists(categoryId)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); //존재하지 않는 카테고리 id값 입력 -> 404에러출력
+        }
+        List<TodoDto> todos = todoService.findAll(categoryId);
+        return ResponseEntity.ok(todos);
     }
 
-    // todo 상세조회
-    @GetMapping("/{todoId}")
-    @ApiOperation(value = "todo 상세조회 api", notes = "todo리스트를 조회한다.")
+    @ApiOperation(value = "todo 상세 조회 API", notes = "선택한 Todo의 자세한 정보를 조회하는 API 입니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공적으로 조회되었습니다."),
+            @ApiResponse(responseCode = "404", description = "해당 Todo를 찾을 수 없습니다.")
+    })
+
+
+    @GetMapping("/todo/{todoId}")
     public ResponseEntity<TodoDto> getTodo(@PathVariable Long todoId) {
+
         TodoDto todo = todoService.findById(todoId);
-        return new ResponseEntity<>(todo, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
-    // todo 생성
-    @PostMapping("/{categoryId}/add")
-    @ApiOperation(value = "todo 생성 api", notes = "todo리스트 생성시 저장된다.")
+    @ApiOperation(value = "todo 생성 API", notes = "새로운 Todo를 생성하는 API 입니다.")
+    @PostMapping("/{categoryId}/todo/add")
     public ResponseEntity<TodoDto> addTodo(@PathVariable Long categoryId, @RequestBody TodoDto todoDto) {
+        if (categoryExists(categoryId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // 404에러
+        }
         todoService.addTodo(categoryId, todoDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    // todo 수정
-    @PatchMapping("/{todoId}/update")
-    public ResponseEntity<TodoDto> updateTodo(@PathVariable Long todoId, @ModelAttribute TodoDto todoDto) {
+
+    @ApiOperation(value = "todo 수정 API", notes = "선택한 Todo의 내용을 수정하는 API 입니다.")
+    @PatchMapping("/todo/{todoId}/update")
+    public ResponseEntity<TodoDto> updateTodo(
+            @PathVariable Long todoId,
+            @RequestParam CategoryEntity categoryId,
+            @RequestBody TodoDto todoDto
+    ) {
+        //업데이트에 카테고리 ID가 필요하면 TodoDto에 categoryId 설정
+      todoDto.setCategory(categoryId);
+
         todoService.update(todoId, todoDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
-    // todo 삭제
-    @DeleteMapping("/{todoId}")
+    @ApiOperation(value = "todo 삭제 API", notes = "선택한 Todo를 삭제하는 API 입니다.")
+    @DeleteMapping("/todo/{todoId}")
     public ResponseEntity<Void> deleteTodo(@PathVariable Long todoId) {
         todoService.deleteTodo(todoId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    private boolean categoryExists(Long categoryId) {
+    return false; //존재하지않는 카테고리id값 -> 404에러출력
     }
 }

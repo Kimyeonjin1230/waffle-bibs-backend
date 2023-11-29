@@ -8,7 +8,7 @@ import java.util.List;
 public interface TodoService {
     void addTodo(Long categoryId, TodoDto todoDto);
     void deleteTodo(Long id);
-    List<TodoDto> findAll();
+    List<TodoDto> findAll(Long categoryId);
     TodoDto findById(Long id);
     void update(Long id, TodoDto updateParam);
 
@@ -37,4 +37,6 @@ public interface TodoService {
                 .build();
         return todoDto;
     }
+
+    List<TodoDto> findAllByCategoryId(Long categoryId);
 }
